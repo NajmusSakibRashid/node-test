@@ -9,6 +9,7 @@
   "author": "Najmus Sakib Rashid",
   "license": "ISC",
   "dependencies": {
-    "express.js": "^1.0.0"
+    "express.js": "^1.0.0",
+    "socket.io": "^4.8.0"
   }
 }

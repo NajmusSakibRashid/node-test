@@ -1,10 +1,28 @@
 const express = require("express");
-const app = express();
+const { Server } = require("socket.io");
+const http = require("http");
 
-app.get("/", (req, res) => {
-  res.send("Hello World");
+const app = express();
+const server = http.createServer(app);
+
+const io = new Server(server, {
+  cors: {
+    origin: "*",
+    methods: ["GET", "POST"],
+  },
 });
 
-app.listen(5000, () => {
+io.on("connection", (socket) => {
+  console.log("A user connected");
+  socket.on("disconnect", () => {
+    console.log("user disconnected");
+  });
+  socket.on("drawing", (data) => {
+    console.log("a line is drawn");
+    socket.broadcast.emit("drawing", data);
+  });
+});
+
+server.listen(5000, () => {
   console.log("Server is running on port 5000");
 });
